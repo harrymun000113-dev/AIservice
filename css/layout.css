@@ -63,3 +63,39 @@
   .chip-row.cats,.chip-row#intents{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;margin-right:-20px;padding-right:20px}
   .chip-row .chip{flex:none}
 }
+
+/* Digital archive atmosphere and glass surfaces */
+.site-header{background:rgba(236,247,249,.68);border-bottom-color:var(--glass-border);backdrop-filter:blur(18px) saturate(145%);-webkit-backdrop-filter:blur(18px) saturate(145%);box-shadow:0 4px 20px rgba(34,67,90,.06)}
+.brand-mark{position:relative;overflow:hidden;background:linear-gradient(145deg,#2466e8,#20b99b);border:1px solid rgba(255,255,255,.48);border-radius:10px;box-shadow:0 5px 14px rgba(35,93,225,.24)}
+.brand-mark::after{content:"";position:absolute;inset:4px;border:1px solid rgba(255,255,255,.36);border-radius:6px;pointer-events:none}
+.hero{position:relative;isolation:isolate;background:linear-gradient(112deg,rgba(47,195,158,.14),rgba(76,126,239,.12) 48%,rgba(245,157,151,.16)),linear-gradient(180deg,rgba(255,255,255,.2),transparent);border-bottom:1px solid var(--glass-border)}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.28;background:repeating-linear-gradient(135deg,transparent 0 38px,rgba(255,255,255,.36) 39px,transparent 40px 78px);pointer-events:none}
+.section.alt{background:rgba(255,255,255,.2);border-color:var(--glass-border);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.stats li{border:1px solid var(--glass-border);background:var(--surface);backdrop-filter:blur(16px) saturate(135%);-webkit-backdrop-filter:blur(16px) saturate(135%);box-shadow:var(--shadow);border-radius:14px}
+.site-footer{border-color:var(--glass-border)}
+.panel{background:color-mix(in srgb,var(--surface) 88%,var(--bg));border-left:1px solid var(--glass-border);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%)}
+.panel-inner{padding-top:max(24px,env(safe-area-inset-top));padding-bottom:max(40px,env(safe-area-inset-bottom))}
+.stack-bar{bottom:max(18px,env(safe-area-inset-bottom))}
+
+@media (max-width:480px){
+  .site-header .bar{height:auto;min-height:60px;gap:8px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+  .brand{gap:7px;font-size:16px}
+  .nav{gap:0}
+  .nav a{padding:8px 6px;font-size:12px;white-space:nowrap}
+  .toolbar{align-items:stretch}
+  .search,.toolbar>.select,.toolbar>#priceSeg{flex:1 1 100%;width:100%;min-width:0}
+  .toolbar>#priceSeg button{flex:1;min-width:0;padding:0 8px}
+  .select select{min-width:0}
+  .cost-controls{align-items:stretch}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:4px;scrollbar-width:thin}
+  .tab{flex:none;white-space:nowrap;min-height:42px}
+  .panel{top:auto;right:0;bottom:0;width:100%;max-height:min(92dvh,880px);border:0;border-top:1px solid var(--glass-border);border-radius:22px 22px 0 0;padding-bottom:env(safe-area-inset-bottom)}
+  .panel-inner{padding:20px 20px max(32px,env(safe-area-inset-bottom))}
+  .stack-bar{width:calc(100% - 24px);max-width:420px}
+  .stack-bar-btn{width:100%;justify-content:space-between;padding:12px 16px;font-size:14px}
+}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .site-header{background:rgba(17,31,43,.72)}
+}
+:root[data-theme="dark"] .site-header{background:rgba(17,31,43,.72)}

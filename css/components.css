@@ -129,3 +129,56 @@
 .seg.small button{height:30px;padding:0 10px;font-size:13px}
 .st-warn{background:var(--hl-soft);border-radius:8px;padding:8px 12px;font-size:14px;margin-bottom:6px}
 .chip-lite.on{background:var(--cobalt-soft);border-color:var(--cobalt);color:var(--cobalt);font-weight:700}
+
+/* Glass controls and catalog entries */
+.chip{min-height:40px;border-color:var(--glass-border);background:rgba(255,255,255,.52);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 2px 8px rgba(35,72,100,.045)}
+.chip[aria-pressed="true"]{background:linear-gradient(135deg,#225fe1,#278ed0);color:#fff;border-color:transparent;box-shadow:0 5px 14px rgba(35,93,225,.2)}
+.chip.intent[aria-pressed="true"]{background:linear-gradient(135deg,#18a887,#20a7c2);border-color:transparent;color:#fff}
+.btn{border:1px solid rgba(255,255,255,.35);background:linear-gradient(135deg,#225fe1,#277fd1);color:#fff;box-shadow:0 6px 16px rgba(35,93,225,.2)}
+.btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--glass-border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.search input,.select select,.st-budget input{border-color:var(--glass-border);background:rgba(255,255,255,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 1px 2px rgba(31,64,87,.04)}
+.search input:focus,.select select:focus,.st-budget input:focus{border-color:var(--cobalt);outline:3px solid var(--cobalt-soft)}
+.seg{border-color:var(--glass-border);background:rgba(255,255,255,.54);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.seg button[aria-pressed="true"]{background:linear-gradient(135deg,#225fe1,#277fd1);color:#fff}
+.tab{border-color:var(--glass-border);background:rgba(255,255,255,.52);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.tab[aria-selected="true"]{background:linear-gradient(135deg,#225fe1,#277fd1);border-color:transparent;box-shadow:0 5px 14px rgba(35,93,225,.18)}
+.card{border-color:var(--glass-border);background:var(--surface);backdrop-filter:blur(16px) saturate(135%);-webkit-backdrop-filter:blur(16px) saturate(135%);box-shadow:var(--shadow);border-radius:14px}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(41,76,106,.14)}
+.avatar{border:1px solid rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.card-cost{border:1px solid rgba(255,208,82,.3);background:var(--hl-soft)}
+.panel-close,.also button,.mini-x{background:var(--surface);border-color:var(--glass-border);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.kpis li,.st-total div{background:var(--surface);border:1px solid var(--glass-border);border-left:5px solid var(--cobalt);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+.notes{background:var(--surface);border:1px solid var(--glass-border);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.bar-track{background:var(--bar-track)}
+.bar-fill{box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.stack-btn{background:var(--surface);border-color:var(--glass-border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 3px 10px rgba(35,72,100,.1)}
+.stack-btn[aria-pressed="true"]{background:linear-gradient(135deg,#225fe1,#277fd1);border-color:transparent;color:#fff}
+.stack-bar-btn{background:linear-gradient(115deg,#173b76,#225fe1 62%,#168e9c);color:#fff;box-shadow:0 10px 28px rgba(25,65,120,.3)}
+.stack-bar-btn .go{color:#ffe27b}
+.st-total div{border-radius:12px}
+.st-msg.ok,.st-msg.bad,.st-warn{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .chip,
+  :root:not([data-theme="light"]) .search input,
+  :root:not([data-theme="light"]) .select select,
+  :root:not([data-theme="light"]) .st-budget input,
+  :root:not([data-theme="light"]) .seg,
+  :root:not([data-theme="light"]) .tab{background-color:rgba(23,42,57,.78)}
+}
+:root[data-theme="dark"] .chip,
+:root[data-theme="dark"] .search input,
+:root[data-theme="dark"] .select select,
+:root[data-theme="dark"] .st-budget input,
+:root[data-theme="dark"] .seg,
+:root[data-theme="dark"] .tab{background-color:rgba(23,42,57,.78)}
+
+@media (max-width:720px){
+  .chip{min-height:42px;padding-inline:15px}
+  .card{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .chart{gap:12px}
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .site-header,.stats li,.chip,.btn.ghost,.search input,.select select,.seg,.tab,.card,.panel,.kpis li,.notes,.stack-btn{background-color:rgba(255,255,255,.96)}
+  :root[data-theme="dark"] .site-header,:root[data-theme="dark"] .stats li,:root[data-theme="dark"] .chip,:root[data-theme="dark"] .btn.ghost,:root[data-theme="dark"] .search input,:root[data-theme="dark"] .select select,:root[data-theme="dark"] .seg,:root[data-theme="dark"] .tab,:root[data-theme="dark"] .card,:root[data-theme="dark"] .panel,:root[data-theme="dark"] .kpis li,:root[data-theme="dark"] .notes,:root[data-theme="dark"] .stack-btn{background-color:rgba(19,35,48,.98)}
+}

@@ -87,8 +87,8 @@ python tools/xlsx_to_services.py "엑셀파일경로.xlsx"
 
 ## 디자인
 
-- 메인 색 남색 `#2B4ACB`, 포인트 색 노랑 `#FFD84D`, 폰트 Pretendard
-- 색은 `css/base.css`의 `:root` 변수에서 한 번에 바꿀 수 있습니다.
+- 디지털 도감 콘셉트의 청록·블루·라일락 배경과 반투명 글래스 UI, 포인트 색 노랑, 폰트 Pretendard
+- 색과 배경은 `css/base.css`의 `:root` 변수에서 조정하며, 라이트·다크 테마를 지원합니다.
 - 서비스 로고 이미지는 사용하지 않고 이름 첫 글자를 색 블록으로 표시합니다.
 
 ## 알려진 한계
