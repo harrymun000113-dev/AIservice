@@ -38,6 +38,12 @@ const $ = id => document.getElementById(id);
 const hueOf = cat => CAT_HUE[cat] != null ? CAT_HUE[cat] : 220;
 const priceClass = p => (p === "무료" ? "free" : p === "유료" ? "paid" : "mix");
 const initials = name => name.replace(/[^A-Za-z가-힣0-9]/g, "").charAt(0).toUpperCase() || "AI";
+const discObserver = "IntersectionObserver" in window
+  ? new IntersectionObserver(entries => entries.forEach(entry => {
+    entry.target.classList.toggle("is-visible", entry.isIntersecting);
+    if (entry.isIntersecting) entry.target.classList.add("is-revealed");
+  }), { threshold: 0.3 })
+  : null;
 
 function haystack(s) { return [s.name, s.category, s.desc, s.use].concat(s.pros).join(" ").toLowerCase(); }
 
@@ -84,24 +90,75 @@ function currentList() {
 
 function card(s) {
   const cost = window.cardCostText ? window.cardCostText(s) : null;
-  const btn = el("button", { class: "card", type: "button", style: "--h:" + hueOf(s.category), "aria-label": s.name + " 자세히 보기" },
-    el("span", { class: "card-top" },
-      serviceLogo(s),
-      el("span", { class: "card-name", text: s.name })),
-    el("span", { class: "card-tags" },
+  const btn = el("button", { class: "disc-card", type: "button", style: "--h:" + hueOf(s.category), "aria-label": s.name + " 상세 정보 보기" },
+    el("span", { class: "disc-stage", "aria-hidden": "true" },
+      el("span", { class: "disc-disc" },
+        el("span", { class: "disc-rotor" },
+          el("span", { class: "disc-sheen" }),
+          el("span", { class: "disc-label" }, serviceLogo(s), el("span", { class: "disc-number", text: String(s.no).padStart(2, "0") })),
+          el("span", { class: "disc-hole" })))),
+    el("span", { class: "disc-info" },
+      el("span", { class: "disc-name", text: s.name }),
+      el("span", { class: "disc-tags" },
       el("span", { class: "tag", text: s.category }),
       el("span", { class: "badge " + priceClass(s.price), text: s.price })),
-    el("span", { class: "card-desc", text: s.desc }),
-    s.pros[0] ? el("span", { class: "card-pro", text: s.pros[0] }) : null,
-    cost ? el("span", { class: "card-cost", text: cost }) : null);
+      el("span", { class: "disc-desc", text: s.desc }),
+      cost ? el("span", { class: "card-cost", text: cost }) : null));
   btn.addEventListener("click", () => openPanel(s, btn));
   return el("li", { class: "card-wrap" }, btn, window.stackToggleButton ? window.stackToggleButton(s) : null);
+}
+
+function setDiscFocus(current, discs) {
+  if (!discs.length) {
+    $("discPosition").textContent = "0 / 0";
+    $("discPrev").disabled = true;
+    $("discNext").disabled = true;
+    return;
+  }
+  current = Math.max(0, Math.min(discs.length - 1, current));
+  discs.forEach((disc, index) => {
+    disc.classList.toggle("is-current", index === current);
+    disc.classList.toggle("is-prev", index === current - 1);
+    disc.classList.toggle("is-next", index === current + 1);
+  });
+  $("discPosition").textContent = String(current + 1).padStart(2, "0") + " / " + String(discs.length).padStart(2, "0");
+  $("discPrev").disabled = current === 0;
+  $("discNext").disabled = current === discs.length - 1;
+}
+
+function syncDiscFocus() {
+  const discs = [...$("grid").querySelectorAll(".disc-card")];
+  if (!discs.length) { setDiscFocus(0, discs); return; }
+  const center = $("grid").getBoundingClientRect().left + $("grid").clientWidth / 2;
+  let current = 0;
+  let nearest = Infinity;
+  discs.forEach((disc, index) => {
+    const rect = disc.getBoundingClientRect();
+    const distance = Math.abs(rect.left + rect.width / 2 - center);
+    if (distance < nearest) { nearest = distance; current = index; }
+  });
+  setDiscFocus(current, discs);
+}
+
+function navigateDisc(direction) {
+  const discs = [...$("grid").querySelectorAll(".disc-card")];
+  if (!discs.length) return;
+  const current = Math.max(0, discs.findIndex(disc => disc.classList.contains("is-current")));
+  const next = Math.min(discs.length - 1, Math.max(0, current + direction));
+  discs[next].scrollIntoView({ behavior: "auto", block: "nearest", inline: "center" });
+  setDiscFocus(next, discs);
 }
 
 function renderGrid() {
   const list = currentList();
   const grid = $("grid");
+  if (discObserver) grid.querySelectorAll(".disc-card").forEach(disc => discObserver.unobserve(disc));
   grid.replaceChildren(...list.map(card));
+  grid.scrollLeft = 0;
+  const initialDisc = grid.querySelectorAll(".disc-card")[Math.min(1, list.length - 1)];
+  if (initialDisc) initialDisc.scrollIntoView({ behavior: "instant", block: "nearest", inline: "center" });
+  if (discObserver) grid.querySelectorAll(".disc-card").forEach(disc => discObserver.observe(disc));
+  syncDiscFocus();
   $("empty").hidden = list.length > 0;
   $("resultLine").textContent = list.length + "개 서비스" + (list.length !== SERVICES.length ? " (전체 " + SERVICES.length + "개 중)" : "");
 }
@@ -243,6 +300,24 @@ function init() {
     const b = e.target.closest("button[data-intent]"); if (b) applyIntent(b.dataset.intent);
   });
   $("resetBtn").addEventListener("click", resetFilters);
+  $("discPrev").addEventListener("click", () => navigateDisc(-1));
+  $("discNext").addEventListener("click", () => navigateDisc(1));
+  $("grid").addEventListener("scroll", syncDiscFocus, { passive: true });
+  window.addEventListener("resize", syncDiscFocus, { passive: true });
+  $("grid").addEventListener("keydown", e => {
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+      e.preventDefault(); navigateDisc(e.key === "ArrowRight" ? 1 : -1);
+    }
+  });
+  let lastWheelNavigation = 0;
+  $("grid").addEventListener("wheel", e => {
+    if (e.ctrlKey || Math.abs(e.deltaY) <= Math.abs(e.deltaX) || $("grid").scrollWidth <= $("grid").clientWidth) return;
+    e.preventDefault();
+    const now = performance.now();
+    if (now - lastWheelNavigation < 360) return;
+    lastWheelNavigation = now;
+    navigateDisc(e.deltaY > 0 ? 1 : -1);
+  }, { passive: false });
   $("scrim").addEventListener("click", closePanel);
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("panel").hidden) closePanel(); trapTab(e); });
 }

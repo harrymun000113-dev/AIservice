@@ -166,6 +166,43 @@
 .p-head .service-logo{width:54px;height:54px;border-radius:15px}
 .p-head .logo-fallback{font-size:21px}
 
+/* Scrollable AI disc library */
+.disc-card{display:flex;flex-direction:column;align-items:center;gap:11px;width:100%;height:100%;min-width:0;padding:6px 4px 10px;border:0;border-radius:16px;background:none;color:var(--ink);text-align:center;cursor:pointer;opacity:.3;transform:translateY(42px) scale(.68) rotateY(34deg);transform-style:preserve-3d;transition:opacity .5s,transform .65s cubic-bezier(.2,.7,.2,1);z-index:1}
+.disc-card.is-current{opacity:1;transform:translateY(-12px) scale(1) rotateY(0);z-index:4}
+.disc-card.is-prev{opacity:.68;transform:translateY(22px) scale(.82) rotateY(38deg) rotateZ(-5deg);z-index:2}
+.disc-card.is-next{opacity:.68;transform:translateY(-2px) scale(.86) rotateY(-36deg) rotateZ(6deg);z-index:3}
+.disc-stage{position:relative;display:grid;place-items:center;width:min(100%,460px);aspect-ratio:1;border-radius:50%;transform-style:preserve-3d;transition:filter .25s}
+.disc-stage::before,.disc-stage::after{content:"";position:absolute;inset:2%;border:1px solid rgba(255,255,255,.33);border-radius:50%;pointer-events:none}
+.disc-stage::after{inset:8%;border-color:rgba(41,83,110,.1)}
+.disc-disc{position:relative;width:96%;aspect-ratio:1;border:1px solid rgba(255,255,255,.84);border-radius:50%;background:linear-gradient(155deg,rgba(255,255,255,.95),rgba(73,103,124,.75) 54%,rgba(239,247,250,.95));box-shadow:0 28px 28px -21px rgba(17,41,60,.58),0 15px 28px rgba(31,60,83,.2),inset 0 0 0 2px rgba(255,255,255,.6);filter:drop-shadow(0 12px 15px rgba(30,63,89,.2));transform:rotateZ(-2deg);transform-style:preserve-3d}
+.disc-disc::before{content:"";position:absolute;inset:1%;border:1px solid rgba(255,255,255,.6);border-radius:50%;background:linear-gradient(160deg,rgba(255,255,255,.4),rgba(77,104,120,.68));transform:translateY(10px) translateZ(-6px);box-shadow:0 12px 16px rgba(18,43,62,.28)}
+.disc-rotor{position:absolute;inset:0;overflow:hidden;border:1px solid rgba(255,255,255,.82);border-radius:50%;background:repeating-radial-gradient(circle at center,transparent 0 5px,rgba(255,255,255,.38) 6px,rgba(29,77,111,.12) 7px,transparent 8px 11px),conic-gradient(from 18deg,hsl(var(--h) 78% 83%),hsl(calc(var(--h) + 62) 68% 88%),hsl(calc(var(--h) + 148) 72% 78%),hsl(calc(var(--h) + 220) 78% 91%),hsl(calc(var(--h) + 300) 70% 79%),hsl(var(--h) 78% 83%));box-shadow:inset 0 0 0 1px rgba(255,255,255,.58),inset 0 0 25px rgba(255,255,255,.45),0 2px 5px rgba(28,63,92,.12);transform:rotate(-14deg);transform-style:preserve-3d}
+.disc-sheen{position:absolute;inset:0;border-radius:50%;background:linear-gradient(132deg,rgba(255,255,255,.76),transparent 23% 43%,rgba(255,255,255,.3) 47%,transparent 53% 78%,rgba(255,255,255,.45));mix-blend-mode:screen;pointer-events:none}
+.disc-label{position:absolute;top:50%;left:50%;display:grid;place-items:center;width:43%;aspect-ratio:1;border:2px solid rgba(255,255,255,.95);border-radius:50%;background:radial-gradient(circle at 34% 26%,rgba(255,255,255,.98),hsl(var(--h) 75% 94% / .96) 72%,hsl(var(--h) 52% 82% / .95));box-shadow:0 6px 14px rgba(22,57,82,.25),inset 0 1px 7px rgba(255,255,255,.9),inset 0 -5px 10px rgba(33,64,83,.14);transform:translate(-50%,-50%) translateZ(8px)}
+.disc-label .service-logo{width:48%;height:auto;aspect-ratio:1;border-radius:11px;box-shadow:0 2px 7px rgba(32,63,84,.16)}
+.disc-label .service-logo img{padding:5px}
+.disc-number{position:absolute;bottom:7%;font-size:9px;font-weight:800;letter-spacing:.08em;color:rgba(28,58,76,.55)}
+.disc-hole{position:absolute;top:50%;left:50%;width:10px;aspect-ratio:1;border:1px solid rgba(34,66,84,.28);border-radius:50%;background:radial-gradient(circle at 35% 32%,#fff 0 28%,#9cabb4 32% 56%,#e8edf0 60% 100%);box-shadow:0 2px 5px rgba(18,50,70,.35),inset 0 1px 2px rgba(23,45,58,.24);transform:translate(-50%,-50%) translateZ(13px)}
+.disc-info{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;min-width:0}
+.disc-name{max-width:100%;font-size:16px;font-weight:800;line-height:1.25;overflow-wrap:anywhere}
+.disc-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:5px}
+.disc-tags .tag,.disc-tags .badge{font-size:11px}
+.disc-desc{display:-webkit-box;max-width:30ch;overflow:hidden;color:var(--muted);font-size:12.5px;line-height:1.45;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.disc-info .card-cost{max-width:100%;margin-top:1px;padding:4px 8px;font-size:11px;white-space:normal}
+.disc-card:hover .disc-stage,.disc-card:focus-visible .disc-stage{filter:drop-shadow(0 12px 18px rgba(35,93,225,.2))}
+.disc-card:hover .disc-disc{filter:drop-shadow(0 16px 18px rgba(30,63,89,.25))}
+.disc-card.is-revealed .disc-stage{animation:disc-arrive .72s cubic-bezier(.18,.72,.25,1) both}
+.disc-card.is-current .disc-stage{animation:disc-arrive .72s cubic-bezier(.18,.72,.25,1) both}
+.disc-card.is-visible .disc-rotor{animation:disc-spin 22s linear infinite}
+.disc-card.is-current .disc-rotor{animation:disc-spin 22s linear infinite}
+.disc-card:hover.is-visible .disc-rotor{animation-duration:5s}
+.disc-card.is-current .disc-name{font-size:19px}
+.disc-card.is-prev .disc-disc,.disc-card.is-next .disc-disc{filter:drop-shadow(0 23px 22px rgba(18,43,62,.34))}
+.disc-card:focus-visible .disc-stage{outline:3px solid var(--cobalt);outline-offset:4px}
+.card-wrap .stack-btn{top:16px;right:7%;z-index:2}
+@keyframes disc-spin{to{transform:rotate(346deg)}}
+@keyframes disc-arrive{from{opacity:.45;transform:perspective(600px) rotateX(24deg) rotateZ(-34deg) scale(.84)}to{opacity:1;transform:perspective(600px) rotateX(0) rotateZ(0) scale(1)}}
+
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .chip,
   :root:not([data-theme="light"]) .search input,
@@ -189,6 +226,25 @@
 @media (max-width:480px){
   .service-logo{width:42px;height:42px;border-radius:12px}
   .p-head .service-logo{width:50px;height:50px}
+  .disc-card{gap:8px;padding:3px 1px 8px}
+  .disc-card{transform:translateY(25px) scale(.7) rotateY(32deg)}
+  .disc-card.is-current{transform:translateY(-6px) scale(1) rotateY(0)}
+  .disc-card.is-prev{transform:translateY(14px) scale(.78) rotateY(35deg) rotateZ(-4deg)}
+  .disc-card.is-next{transform:translateY(0) scale(.8) rotateY(-34deg) rotateZ(5deg)}
+  .disc-stage{width:min(100%,350px)}
+  .disc-disc{transform:rotateZ(-2deg)}
+  .disc-name{font-size:14px}
+  .disc-desc{font-size:11.5px}
+  .disc-label .service-logo{border-radius:8px}
+  .disc-number{font-size:7px}
+  .disc-hole{width:7px}
+  .card-wrap .stack-btn{top:8px;right:2px;width:28px;height:28px}
+}
+@media (prefers-reduced-motion:reduce){
+  .disc-card.is-revealed .disc-stage{animation:none}
+  .disc-card.is-current .disc-stage{animation:none}
+  .disc-card.is-visible .disc-rotor{animation:none}
+  .disc-card.is-current .disc-rotor{animation:none}
 }
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   .site-header,.stats li,.chip,.btn.ghost,.search input,.select select,.seg,.tab,.card,.panel,.kpis li,.notes,.stack-btn{background-color:rgba(255,255,255,.96)}

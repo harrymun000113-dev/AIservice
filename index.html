@@ -77,7 +77,12 @@
       </details>
       <p class="result-line" id="resultLine" aria-live="polite"></p>
 
-      <ul class="grid" id="grid"></ul>
+      <div class="disc-controls" aria-label="AI CD 갤러리 탐색">
+        <button class="disc-arrow" id="discPrev" type="button" aria-label="이전 AI 서비스" title="이전 AI 서비스">←</button>
+        <span class="disc-position" id="discPosition" aria-live="polite"></span>
+        <button class="disc-arrow" id="discNext" type="button" aria-label="다음 AI 서비스" title="다음 AI 서비스">→</button>
+      </div>
+      <ul class="grid" id="grid" aria-label="AI 서비스 CD 컬렉션"></ul>
       <div class="empty" id="empty" hidden>
         <p class="empty-title">조건에 맞는 서비스가 없어요</p>
         <button class="btn" id="resetBtn" type="button">필터 모두 지우기</button>
