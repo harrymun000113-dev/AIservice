@@ -5,7 +5,7 @@ const costState = { tab: "video", cur: "USD", qual: "basic", retry: 1, cat: "글
 function fmtMoney(usd, cur) {
   cur = cur || costState.cur;
   if (cur === "KRW") return Math.round(usd * COST_FX.KRW).toLocaleString("ko-KR") + "원";
-  if (usd < 0.1) return (usd * 100).toFixed(1) + "¢";
+  if (usd < 0.01) return "$" + usd.toFixed(3);
   if (usd < 10) return "$" + usd.toFixed(2);
   return "$" + usd.toFixed(1).replace(/\.0$/, "");
 }

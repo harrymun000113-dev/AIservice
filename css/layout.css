@@ -76,6 +76,14 @@
 .panel{background:color-mix(in srgb,var(--surface) 88%,var(--bg));border-left:1px solid var(--glass-border);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%)}
 .panel-inner{padding-top:max(24px,env(safe-area-inset-top));padding-bottom:max(40px,env(safe-area-inset-bottom))}
 .stack-bar{bottom:max(18px,env(safe-area-inset-bottom))}
+.toolbar .search input{height:48px;border-radius:13px;font-size:16px}
+.filter-heading{display:flex;align-items:baseline;gap:12px;margin:20px 0 8px}
+.filter-heading h3{font-size:16px;font-weight:800}
+.filter-heading span{font-size:13px;color:var(--muted)}
+.category-select{display:none}
+.intent-quick{margin:14px 0 8px;border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);padding:10px 0}
+.intent-quick summary{cursor:pointer;color:var(--muted);font-size:14px;font-weight:700}
+.intent-quick .chip-row{margin-top:10px}
 
 @media (max-width:480px){
   .site-header .bar{height:auto;min-height:60px;gap:8px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
@@ -85,6 +93,10 @@
   .toolbar{align-items:stretch}
   .search,.toolbar>.select,.toolbar>#priceSeg{flex:1 1 100%;width:100%;min-width:0}
   .toolbar>#priceSeg button{flex:1;min-width:0;padding:0 8px}
+  .category-select{display:block}
+  .cats{display:none}
+  .filter-heading{margin-top:18px}
+  .filter-heading span{font-size:12px}
   .select select{min-width:0}
   .cost-controls{align-items:stretch}
   .tabs{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:4px;scrollbar-width:thin}

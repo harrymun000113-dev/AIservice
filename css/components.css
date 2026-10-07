@@ -157,6 +157,14 @@
 .stack-bar-btn .go{color:#ffe27b}
 .st-total div{border-radius:12px}
 .st-msg.ok,.st-msg.bad,.st-warn{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.service-logo{position:relative;display:grid;place-items:center;width:44px;height:44px;flex:none;overflow:hidden;border:1px solid rgba(255,255,255,.82);border-radius:13px;background:rgba(255,255,255,.88);box-shadow:0 4px 12px rgba(31,66,94,.1)}
+.service-logo img{width:100%;height:100%;padding:7px;object-fit:contain}
+.logo-fallback{display:none;width:100%;height:100%;place-items:center;color:hsl(var(--h,220) 55% 38%);background:hsl(var(--h,220) 70% 93%);font-size:18px;font-weight:800}
+.service-logo.is-fallback .logo-fallback{display:grid}
+.service-logo.is-fallback img{display:none}
+.card-name{flex:1;min-width:0}
+.p-head .service-logo{width:54px;height:54px;border-radius:15px}
+.p-head .logo-fallback{font-size:21px}
 
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .chip,
@@ -177,6 +185,10 @@
   .chip{min-height:42px;padding-inline:15px}
   .card{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
   .chart{gap:12px}
+}
+@media (max-width:480px){
+  .service-logo{width:42px;height:42px;border-radius:12px}
+  .p-head .service-logo{width:50px;height:50px}
 }
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   .site-header,.stats li,.chip,.btn.ghost,.search input,.select select,.seg,.tab,.card,.panel,.kpis li,.notes,.stack-btn{background-color:rgba(255,255,255,.96)}

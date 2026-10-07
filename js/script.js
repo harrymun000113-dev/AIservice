@@ -37,8 +37,25 @@ function el(tag, props, ...kids) {
 const $ = id => document.getElementById(id);
 const hueOf = cat => CAT_HUE[cat] != null ? CAT_HUE[cat] : 220;
 const priceClass = p => (p === "무료" ? "free" : p === "유료" ? "paid" : "mix");
+const initials = name => name.replace(/[^A-Za-z가-힣0-9]/g, "").charAt(0).toUpperCase() || "AI";
 
-function haystack(s) { return [s.name, s.desc, s.use].concat(s.pros).join(" ").toLowerCase(); }
+function haystack(s) { return [s.name, s.category, s.desc, s.use].concat(s.pros).join(" ").toLowerCase(); }
+
+function serviceLogo(s) {
+  let src = "";
+  try {
+    const icon = new URL("https://www.google.com/s2/favicons");
+    icon.searchParams.set("domain_url", new URL(s.url).origin);
+    icon.searchParams.set("sz", "128");
+    src = icon.href;
+  } catch (e) { /* 잘못된 주소는 이니셜로 표시 */ }
+  const logo = el("span", { class: "service-logo", "aria-hidden": "true" },
+    src ? el("img", { src, alt: "", loading: "lazy", decoding: "async", referrerpolicy: "no-referrer" }) : null,
+    el("span", { class: "logo-fallback", text: initials(s.name) }));
+  const image = logo.querySelector("img");
+  if (image) image.addEventListener("error", () => logo.classList.add("is-fallback"), { once: true });
+  return logo;
+}
 
 function matches(s) {
   if (state.cat && s.category !== state.cat) return false;
@@ -46,7 +63,8 @@ function matches(s) {
   const q = state.q.trim().toLowerCase();
   if (q) {
     const h = haystack(s);
-    if (!q.split("|").some(t => t.trim() && h.includes(t.trim()))) return false;
+    const terms = q.split(/[|,]/).map(t => t.trim()).filter(Boolean);
+    if (terms.length && !terms.some(t => h.includes(t))) return false;
   }
   return true;
 }
@@ -68,7 +86,7 @@ function card(s) {
   const cost = window.cardCostText ? window.cardCostText(s) : null;
   const btn = el("button", { class: "card", type: "button", style: "--h:" + hueOf(s.category), "aria-label": s.name + " 자세히 보기" },
     el("span", { class: "card-top" },
-      el("span", { class: "avatar", "aria-hidden": "true", text: s.name.replace(/[^A-Za-z가-힣0-9]/g, "").charAt(0).toUpperCase() }),
+      serviceLogo(s),
       el("span", { class: "card-name", text: s.name })),
     el("span", { class: "card-tags" },
       el("span", { class: "tag", text: s.category }),
@@ -94,6 +112,10 @@ function renderCats() {
   const mk = (val, label, n) => el("button", { class: "chip", type: "button", "aria-pressed": String(state.cat === val), "data-cat": val },
     label, el("span", { class: "n", text: n }));
   $("cats").replaceChildren(mk("", "전체", SERVICES.length), ...CATEGORIES.map(c => mk(c, c, counts[c])));
+  const select = $("categorySelect");
+  select.replaceChildren(el("option", { value: "", text: "모든 분야 (" + SERVICES.length + ")" }),
+    ...CATEGORIES.map(c => el("option", { value: c, text: c + " (" + counts[c] + ")" })));
+  select.value = state.cat;
 }
 
 function renderPriceSeg() {
@@ -140,7 +162,7 @@ function openPanel(s, opener) {
   body.replaceChildren(
     el("button", { class: "panel-close", type: "button", "aria-label": "닫기", text: "✕", onclick: closePanel }),
     el("div", { class: "p-head", style: "--h:" + hueOf(s.category) },
-      el("span", { class: "avatar", "aria-hidden": "true", text: s.name.replace(/[^A-Za-z가-힣0-9]/g, "").charAt(0).toUpperCase() }),
+      serviceLogo(s),
       el("div", null,
         el("h2", { id: "panelTitle", text: s.name }),
         el("div", { class: "p-tags" },
@@ -208,6 +230,7 @@ function init() {
   initTheme(); initStats(); syncControls();
   $("q").addEventListener("input", e => { state.q = e.target.value; state.intent = null; renderIntents(); renderGrid(); });
   $("sort").addEventListener("change", e => { state.sort = e.target.value; renderGrid(); });
+  $("categorySelect").addEventListener("change", e => { state.cat = e.target.value; state.intent = null; syncControls(); });
   $("cats").addEventListener("click", e => {
     const b = e.target.closest("button[data-cat]"); if (!b) return;
     state.cat = b.dataset.cat; state.intent = null; syncControls();

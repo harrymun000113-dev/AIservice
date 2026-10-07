@@ -46,15 +46,14 @@
         <h2>서비스 목록</h2>
       </div>
 
-      <div class="intent-block">
-        <p class="label">이럴 때 찾고 있어요</p>
-        <div class="chip-row" id="intents" role="group" aria-label="상황으로 찾기"></div>
-      </div>
-
       <div class="toolbar">
         <label class="search">
           <span class="visually-hidden">서비스 검색</span>
-          <input id="q" type="search" placeholder="이름·설명·용도로 검색 (예: 논문, 한국어)" autocomplete="off">
+          <input id="q" type="search" placeholder="AI 서비스 검색 (예: 논문, 한국어)" autocomplete="off">
+        </label>
+        <label class="select category-select">
+          <span class="visually-hidden">분야 선택</span>
+          <select id="categorySelect"><option value="">모든 분야</option></select>
         </label>
         <div class="seg" id="priceSeg" role="group" aria-label="요금 필터"></div>
         <label class="select">
@@ -67,7 +66,15 @@
         </label>
       </div>
 
+      <div class="filter-heading">
+        <h3>분야별로 찾기</h3>
+        <span>관심 분야를 선택해 결과를 좁혀보세요</span>
+      </div>
       <div class="chip-row cats" id="cats" role="group" aria-label="분야 필터"></div>
+      <details class="intent-quick">
+        <summary>상황으로 빠르게 찾기</summary>
+        <div class="chip-row" id="intents" role="group" aria-label="상황으로 찾기"></div>
+      </details>
       <p class="result-line" id="resultLine" aria-live="polite"></p>
 
       <ul class="grid" id="grid"></ul>
