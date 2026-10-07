@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 도구함 · 분야별 AI 서비스 리스트</title>
+<meta name="description" content="리서치부터 영상·음성까지, 직접 조사한 AI 서비스 67건을 분야별로 비교하고 1분당 비용까지 한눈에 보는 AI 서비스 리스트">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<a class="skip" href="#services">본문으로 건너뛰기</a>
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="AI 도구함 맨 위로">
+      <span class="brand-mark" aria-hidden="true">AI</span><span class="brand-name">AI 도구함</span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="#services">서비스 목록</a>
+      <a href="#cost">비용 비교</a>
+    </nav>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="화면 테마 바꾸기" title="화면 테마 바꾸기">◐</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">AI 서비스 조사 · 최신일 2026.10.07 기준</p>
+      <h1>뭘 하고 싶은지 고르면,<br><span class="hl">쓸 만한 AI</span>를 찾아드려요</h1>
+      <p class="hero-lead">조원 4명이 직접 조사한 AI 서비스를 분야별로 모았습니다. 장단점은 물론, 영상·음성은 <b>1분 만드는 데 드는 돈</b>까지 비교할 수 있어요.</p>
+      <ul class="stats" id="stats" aria-label="요약 수치"></ul>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker">01 · Services</p>
+        <h2>서비스 목록</h2>
+      </div>
+
+      <div class="intent-block">
+        <p class="label">이럴 때 찾고 있어요</p>
+        <div class="chip-row" id="intents" role="group" aria-label="상황으로 찾기"></div>
+      </div>
+
+      <div class="toolbar">
+        <label class="search">
+          <span class="visually-hidden">서비스 검색</span>
+          <input id="q" type="search" placeholder="이름·설명·용도로 검색 (예: 논문, 한국어)" autocomplete="off">
+        </label>
+        <div class="seg" id="priceSeg" role="group" aria-label="요금 필터"></div>
+        <label class="select">
+          <span class="visually-hidden">정렬</span>
+          <select id="sort">
+            <option value="no">기본 순서</option>
+            <option value="name">이름순</option>
+            <option value="price">저렴한 유료 플랜순</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="chip-row cats" id="cats" role="group" aria-label="분야 필터"></div>
+      <p class="result-line" id="resultLine" aria-live="polite"></p>
+
+      <ul class="grid" id="grid"></ul>
+      <div class="empty" id="empty" hidden>
+        <p class="empty-title">조건에 맞는 서비스가 없어요</p>
+        <button class="btn" id="resetBtn" type="button">필터 모두 지우기</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="cost" class="section alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker">02 · Cost per minute</p>
+        <h2>1분 만들 때 드는 대략적 비용</h2>
+        <p class="sec-lead">구독료가 아니라 <b>결과물 1분당 값</b>으로 비교합니다. 크레딧을 달러로 환산한 추정치예요.</p>
+      </div>
+
+      <div class="cost-controls">
+        <div class="tabs" id="costTabs" role="tablist" aria-label="비교 종류"></div>
+        <div class="seg" id="curSeg" role="group" aria-label="통화">
+          <button type="button" data-cur="USD" aria-pressed="true">$ 달러</button>
+          <button type="button" data-cur="KRW" aria-pressed="false">₩ 원</button>
+        </div>
+      </div>
+
+      <div class="cost-sub" id="costSub">
+        <div class="seg" id="qualSeg" role="group" aria-label="화질" hidden></div>
+        <label class="range" id="retryWrap">
+          <span class="range-label" id="retryLabel"></span>
+          <input id="retry" type="range" min="1" max="10" value="1" step="1">
+          <output id="retryOut" for="retry">1번</output>
+        </label>
+        <label class="select" id="catPickWrap" hidden>
+          <span class="visually-hidden">분야 선택</span>
+          <select id="catPick"></select>
+        </label>
+      </div>
+
+      <p class="cost-lead" id="costLead"></p>
+      <ul class="kpis" id="kpis"></ul>
+      <div class="chart" id="chart" role="list" aria-label="비용 비교 차트"></div>
+      <div class="chart-extra" id="chartExtra"></div>
+
+      <details class="notes" id="costNotes">
+        <summary>계산 방법과 한계 보기</summary>
+        <div class="notes-body" id="notesBody"></div>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>AI 서비스 조사 통합표(2026.10.07 기준)를 바탕으로 만들었습니다. 요금과 기능은 자주 바뀌니 가입 전에 공식 페이지에서 한 번 더 확인하세요.</p>
+    <p class="small">1분당 비용은 공개 자료를 크레딧→달러로 환산한 추정치이며 환율은 1달러=1,400원으로 가정했습니다.</p>
+  </div>
+</footer>
+
+<div class="stack-bar" id="stackBar" hidden>
+  <button class="stack-bar-btn" id="stackBarBtn" type="button"><span id="stackBarText"></span><span class="go">열기 →</span></button>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle" hidden tabindex="-1">
+  <div class="panel-inner" id="panelBody"></div>
+</aside>
+
+<script src="js/services.js"></script>
+<script src="js/costs.js"></script>
+<script src="js/script.js"></script>
+<script src="js/cost-chart.js"></script>
+<script src="js/stack.js"></script>
+</body>
+</html>

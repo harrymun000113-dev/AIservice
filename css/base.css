@@ -1,0 +1,54 @@
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#18202E; --muted:#5B6474; --rule:#D9DEE8;
+  --cobalt:#2B4ACB; --cobalt-soft:#E4E9FB; --on-cobalt:#FFFFFF;
+  --hl:#FFD84D; --hl-soft:#FFF3BF;
+  --free-bg:#DDF3EA; --free-ink:#17694F;
+  --paid-bg:#FCE4E2; --paid-ink:#A8322A;
+  --mix-bg:#E4E9FB; --mix-ink:#2B4ACB;
+  --tint-bg:93%; --tint-ink:34%;
+  --bar-track:#E6EAF1;
+  --shadow:0 1px 2px rgba(24,32,46,.06),0 6px 20px rgba(24,32,46,.06);
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --radius:10px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F141E; --surface:#182030; --ink:#EEF1F7; --muted:#A3AEC2; --rule:#2B3548;
+    --cobalt:#8EA2FF; --cobalt-soft:#222C55; --on-cobalt:#0F141E;
+    --hl-soft:#4A4120;
+    --free-bg:#16352D; --free-ink:#6FD6B5;
+    --paid-bg:#3B1E1C; --paid-ink:#FF9E96;
+    --mix-bg:#222C55; --mix-ink:#A9B8FF;
+    --tint-bg:22%; --tint-ink:82%;
+    --bar-track:#242E43;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F141E; --surface:#182030; --ink:#EEF1F7; --muted:#A3AEC2; --rule:#2B3548;
+  --cobalt:#8EA2FF; --cobalt-soft:#222C55; --on-cobalt:#0F141E;
+  --hl-soft:#4A4120;
+  --free-bg:#16352D; --free-ink:#6FD6B5;
+  --paid-bg:#3B1E1C; --paid-ink:#FF9E96;
+  --mix-bg:#222C55; --mix-ink:#A9B8FF;
+  --tint-bg:22%; --tint-ink:82%;
+  --bar-track:#242E43;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3,p,ul,ol,dl,dd{margin:0}
+ul{padding:0;list-style:none}
+a{color:var(--cobalt)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+img,svg{max-width:100%}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;background:var(--cobalt);color:var(--on-cobalt);padding:8px 14px;z-index:100;border-radius:6px}
+.skip:focus{top:10px}
+:focus-visible{outline:3px solid var(--hl);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
